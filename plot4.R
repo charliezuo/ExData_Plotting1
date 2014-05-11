@@ -1,0 +1,17 @@
+data <- read.table("household_power_consumption.txt", sep=";",na.strings="?", colClasses = "character", skip = 66637, as.is = TRUE,nrows = 2880)
+#dates <- as.Date(as.character(data[,1]), format = "")
+x <- paste(data[,1], data[,2])
+myDates <- strptime(x, format = "%d/%m/%Y %H:%M:%S", tz = "")
+png(filename = "Plot4.png", width = 480, height = 480)
+par(mfrow = c(2,2))
+with(data, {
+  plot(myDates, as.numeric(data[,3]), type = "l", xlab = "", ylab = "Global Active Power")
+  plot(myDates, as.numeric(data[,5]), type = "l", xlab = "datetime", ylab = "Voltage")
+  plot(myDates, as.numeric(data[,7]), type = 'l', xlab = "", ylab = 'Energy sub metering', col = "black", sub = "")
+  lines(myDates, as.numeric(data[,8]), col = 'red')
+  lines(myDates, as.numeric(data[,9]), col = 'blue')
+  legend("topright", legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black", "red", "blue"), lty = c(1,1,1), lwd = c(2,2,2))
+  plot(myDates, as.numeric(data[,4]),  type = "l", xlab = "datetime", ylab = "Global Reactive Power")
+})
+
+dev.off()

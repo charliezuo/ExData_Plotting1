@@ -1,0 +1,5 @@
+data <- read.table("household_power_consumption.txt", sep=";",na.strings="?", colClasses = "character", skip = 66637, nrows = 2880)
+dates <- as.Date(as.character(data[,1]), format = "")
+x <- paste(dates, data[,2])
+myDates <- strptime(x, format = "%Y-%m-%d %H:%M:%S", tz = "")
+hist(as.numeric(data[,3]), main = "Global Active Power", xlab = "Global Active Power kilowatts", col = "red")  
